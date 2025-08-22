@@ -1,5 +1,3 @@
-using System.Diagnostics.Contracts;
-using FFSchedulingApp.Enums;
 using FFSchedulingApp.Model;
 
 namespace FFSchedulingApp
@@ -70,6 +68,7 @@ namespace FFSchedulingApp
             //     m.HomeTeam.PossibleOpponents.Remove(m.AwayTeam);
             //     m.AwayTeam.PossibleOpponents.Remove(m.HomeTeam);
             // });
+            ToString();
             return rivalryWeek;
         }
 

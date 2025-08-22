@@ -1,7 +1,3 @@
-using System.Runtime.CompilerServices;
-using FFSchedulingApp.Enums;
-
-
 namespace FFSchedulingApp.Model
 {
     /// <summary>
@@ -53,14 +49,15 @@ namespace FFSchedulingApp.Model
             HomeTeam.UpdateMatchTypes(this);        
             AwayTeam.UpdateMatchTypes(this);
 
-            // remove available opps from main opp list on each team
-            Console.WriteLine($"Original possible opponents for {HomeTeam}: " + HomeTeam.PossibleOpponents.Count);
-            HomeTeam.PossibleOpponents.Remove(AwayTeam);
-            Console.WriteLine($"New possible opponents for {HomeTeam}: " + HomeTeam.PossibleOpponents.Count);
-
-            Console.WriteLine($"Original possible opponents for {AwayTeam}: " + AwayTeam.PossibleOpponents.Count);
-            AwayTeam.PossibleOpponents.Remove(HomeTeam);
-            Console.WriteLine($"New possible opponents for {AwayTeam}: " + AwayTeam.PossibleOpponents.Count + "\n");
+            
+            if (MatchWeek > 1)
+            {
+                // remove opps from main opp list on each team
+                Console.WriteLine($"Original possible opponents: {HomeTeam}: " + HomeTeam.PossibleOpponents.Count + $", {AwayTeam}: " + AwayTeam.PossibleOpponents.Count);
+                HomeTeam.PossibleOpponents.Remove(AwayTeam);
+                AwayTeam.PossibleOpponents.Remove(HomeTeam);
+                Console.WriteLine($"New possible opponents: {HomeTeam}: " + HomeTeam.PossibleOpponents.Count + $", {AwayTeam}: " + AwayTeam.PossibleOpponents.Count + "\n");
+            }                
         }
 
         public override string ToString()

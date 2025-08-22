@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FFSchedulingApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4b6dba5deba71a98518ba7f9c0df09ad2c162b27")]
 [assembly: System.Reflection.AssemblyProductAttribute("FFSchedulingApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FFSchedulingApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

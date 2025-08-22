@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using FFSchedulingApp.Enums;
+﻿using FFSchedulingApp.Enums;
 using FFSchedulingApp.Model;
 using static FFSchedulingApp.Model.Match;
 
@@ -21,7 +16,7 @@ namespace FFSchedulingApp
             _teamList.ShuffleTeams();
 
             // Divisional Weeks
-            Console.WriteLine("Building Divisional Weeks 2-6");
+            Console.WriteLine("\nBuilding Divisional Weeks 2-6");            
             for (int i = 2; i <= 6; i++)
             {
                 Console.WriteLine($"\n---Building Divisional Week {i}---");
@@ -41,7 +36,6 @@ namespace FFSchedulingApp
                 [
                     .. matches.Select(m => m.HomeTeam).ToList(),
                     .. matches.Select(m => m.AwayTeam).ToList()
-
                 ];
 
                 // If team has no matches scheduled find a matchup
@@ -96,13 +90,13 @@ namespace FFSchedulingApp
         /// <param name="team">Team whos opponent list to search</param>
         /// <param name="matchType">The matchtype of the opponent you would like to find</param>
         /// <returns>Next opponent of the appropriate matchtype, if there are none returns an empty team</returns>
-        private static Team FindNextOpponent(Team team, MatchTypes matchType)
+        private static Team FindNextOpponent(Team team, MatchTypes matchType, List<Team> tempOppList)
         {
             Divisions opponentDivision = matchType.Equals(MatchTypes.Divisional) ? team.Division : GetOppositeDivision(team.Division);
-            Team opponentTeam = team.PossibleOpponents.FirstOrDefault(t => t.Division.Equals(team.Division)) ?? new Team();
+            Team opponentTeam = tempOppList.FirstOrDefault(po => po.Division.Equals(team.Division)) ?? new Team();
             if (opponentTeam.IsNull())
             {
-                Console.WriteLine($"Cannot find anymore {matchType} opponents for: {team}. Finding next {GetOppositeMatchType(matchType)} opponent");
+                Console.WriteLine($"Cannot find anymore {matchType} opponents for: {team}");
             }
             return opponentTeam;
         }

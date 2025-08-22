@@ -26,3 +26,4 @@ C:\Users\rngoo\Source\FFSchedulingApp\FFSchedulingApp\obj\Debug\net9.0\refint\FF
 C:\Users\rngoo\Source\FFSchedulingApp\FFSchedulingApp\obj\Debug\net9.0\FFSchedulingApp.pdb
 C:\Users\rngoo\Source\FFSchedulingApp\FFSchedulingApp\obj\Debug\net9.0\FFSchedulingApp.genruntimeconfig.cache
 C:\Users\rngoo\Source\FFSchedulingApp\FFSchedulingApp\obj\Debug\net9.0\ref\FFSchedulingApp.dll
+c:\Users\rngoo\Source\FFSchedulingApp\FFSchedulingApp\obj\Debug\net9.0\FFSchedulingApp.sourcelink.json
