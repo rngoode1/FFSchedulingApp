@@ -14,6 +14,9 @@ namespace FFSchedulingApp
 
             _schedule.AddWeek(_teamList.RivalryWeek());
             _teamList.ShuffleTeams();
+            _teamList.SetCrossOpponents();
+
+            return;
 
             // Divisional Weeks
             Console.WriteLine("\nBuilding Divisional Weeks 2-6");            

@@ -1,3 +1,4 @@
+using FFSchedulingApp.Enums;
 using FFSchedulingApp.Model;
 
 namespace FFSchedulingApp
@@ -70,6 +71,27 @@ namespace FFSchedulingApp
             // });
             ToString();
             return rivalryWeek;
+        }
+
+        public void SetCrossOpponents()
+        {
+            List<Team> skins =
+            [
+                .. Teams.Where(t => t.Division.Equals(Divisions.Skins))
+            ];
+
+            foreach (Team shirtTeam in Teams.Where(t => t.Division.Equals(Divisions.Shirts)))
+            {
+                Team skinsTeam = skins.FirstOrDefault() ?? new Team();
+                shirtTeam.CrossDivisionalOppId = skinsTeam.Id;
+                skinsTeam.CrossDivisionalOppId = shirtTeam.Id;
+                skins.Remove(skinsTeam);
+            }
+
+            foreach (Team team in Teams)
+            {
+                Console.WriteLine($"{team} cross div opp is: {GetTeam(team.CrossDivisionalOppId)}");
+            }
         }
 
         public void ShuffleTeams()

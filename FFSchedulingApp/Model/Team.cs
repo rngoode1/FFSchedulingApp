@@ -32,6 +32,7 @@ namespace FFSchedulingApp.Model
         /// List of remaining matchups by team id
         /// </summary>
         public List<Team> PossibleOpponents { get; set; }
+        public int CrossDivisionalOppId { get; set; }
 
         /// <summary>
         /// Empty Team object
@@ -42,6 +43,7 @@ namespace FFSchedulingApp.Model
             Name = "";
             Division = Divisions.None;
             PossibleOpponents = [];
+            CrossDivisionalOppId = 0;
         }
 
         /// <summary>
@@ -55,7 +57,8 @@ namespace FFSchedulingApp.Model
             Name = Enum.GetName(typeof(TeamInfo), id) ?? "";
             Division = (id + 10) % 2 == 0 ? Divisions.Shirts : Divisions.Skins;
             PossibleOpponents = [];
-        }
+            CrossDivisionalOppId = 0;
+        }        
 
         /// <summary>
         /// Updates the number of match types for this team
