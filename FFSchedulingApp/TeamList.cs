@@ -1,3 +1,4 @@
+using FFSchedulingApp.Enums;
 using FFSchedulingApp.Model;
 
 namespace FFSchedulingApp
@@ -61,15 +62,93 @@ namespace FFSchedulingApp
                     )
                 )],
                 1
-            );
-            // Teams.ForEach(t => t.CrossDivisionalMatches++);
+            );            
+            Teams.ForEach(t => t.CrossDivisionalMatches++);
             // rivalryWeek.Matches.ForEach(m =>
             // {
             //     m.HomeTeam.PossibleOpponents.Remove(m.AwayTeam);
             //     m.AwayTeam.PossibleOpponents.Remove(m.HomeTeam);
             // });
             ToString();
+            Console.WriteLine("\n");
             return rivalryWeek;
+        }
+
+        public void SetCrossOpponents()
+        {
+            List<Team> skins =
+            [
+                .. Teams.Where(t => t.Division.Equals(Divisions.Skins))
+            ];
+            var error = false;
+            foreach (Team shirtTeam in Teams.Where(t => t.Division.Equals(Divisions.Shirts)))
+            {
+                if (shirtTeam.TotalMatches() < 6)
+                {
+                    Team skinsTeam = skins.First(s => s.Id != shirtTeam.Id - 1) ?? new Team();
+                    if (skinsTeam.IsNull()) error = true;
+                    shirtTeam.CrossDivisionalOppId = skinsTeam.Id;
+                    skinsTeam.CrossDivisionalOppId = shirtTeam.Id;
+                    skins.Remove(skinsTeam);
+                }
+                else
+                {
+                    Team skinsTeam = shirtTeam.PossibleOpponents.FirstOrDefault(sh => sh.Division.Equals(Divisions.Skins)) ?? new Team();
+                    if (skinsTeam.IsNull()) error = true;
+                    shirtTeam.CrossDivisionalOppId = skinsTeam.Id;
+                    skinsTeam.CrossDivisionalOppId = shirtTeam.Id;
+                }                
+            }
+
+            if (error)
+            {
+                foreach (Team team in Teams)
+                {
+                    team.CrossDivisionalOppId = 0;
+                }
+            }
+
+            foreach (Team team in Teams)
+            {
+                Console.WriteLine($"{team} cross div opp is: {GetTeam(team.CrossDivisionalOppId)}");
+            }
+        }
+
+        public void CheckCounts()
+        {
+            Console.WriteLine("--Validating Counts--\n");
+            foreach (Team team in this.Teams)
+            {
+                Console.WriteLine(team);
+                Console.WriteLine($"Divisional {team.DivisionalMatches}");
+                Console.WriteLine($"CrossDiv {team.CrossDivisionalMatches}\n");
+            }   
+        }
+
+        public void OrderByPossibleDivOppDesc2()
+        {
+            Teams =
+            [
+                .. Teams.OrderBy(t =>
+                    t.PossibleOpponents
+                        .Where(op => op.Division == t.Division)
+                        .Count())
+            ];            
+        }
+
+        public void OrderByPossibleDivOppDesc()
+        {
+            Teams =
+            [
+                .. Teams.OrderBy(t =>
+                    t.PossibleOpponents
+                        .GroupBy(op => op.Id)
+                        .Where(g => g.Count() > 1)
+                        .SelectMany(g => g)
+                        .Where(op => op.Division == t.Division)
+                        .DistinctBy(t => t.Id)
+                        .Count())
+            ];
         }
 
         public void ShuffleTeams()

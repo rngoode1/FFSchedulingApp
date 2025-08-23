@@ -1,3 +1,5 @@
+using static FFSchedulingApp.Model.Match;
+
 namespace FFSchedulingApp.Model
 {
     /// <summary>
@@ -27,6 +29,29 @@ namespace FFSchedulingApp.Model
         {
             Matches = matches;
             WeekNumber = weekNumber;
+        }
+
+        public void RollBack()
+        {
+            foreach (Match match in Matches)
+            {
+                if (match.MatchType == MatchTypes.CrossDivisional)
+                {
+                    match.HomeTeam.CrossDivisionalOppId = match.AwayTeam.Id;
+                    match.HomeTeam.CrossDivisionalMatches--;
+
+                    match.AwayTeam.CrossDivisionalOppId = match.HomeTeam.Id;
+                    match.AwayTeam.CrossDivisionalMatches--;
+                }
+                else
+                {
+                    match.HomeTeam.DivisionalMatches--;
+                    match.AwayTeam.DivisionalMatches--;
+                }
+
+                match.HomeTeam.PossibleOpponents.Add(match.AwayTeam);
+                match.AwayTeam.PossibleOpponents.Add(match.HomeTeam);
+            }
         }
 
         public override string ToString()
