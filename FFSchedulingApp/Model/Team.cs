@@ -32,6 +32,7 @@ namespace FFSchedulingApp.Model
         /// List of remaining matchups by team id
         /// </summary>
         public List<Team> PossibleOpponents { get; set; }
+
         public int CrossDivisionalOppId { get; set; }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace FFSchedulingApp.Model
             Division = (id + 10) % 2 == 0 ? Divisions.Shirts : Divisions.Skins;
             PossibleOpponents = [];
             CrossDivisionalOppId = 0;
-        }        
+        }
 
         /// <summary>
         /// Updates the number of match types for this team
@@ -66,7 +67,7 @@ namespace FFSchedulingApp.Model
         /// <param name="newMatch">The match that has just been added to a Week</param>
         public void UpdateMatchTypes(Match newMatch)
         {
-            bool isDivisional = newMatch.MatchType == MatchTypes.Divisional;
+            bool isDivisional = newMatch.MatchType.Equals(MatchTypes.Divisional);
             DivisionalMatches += isDivisional ? 1 : 0;
             CrossDivisionalMatches += isDivisional ? 0 : 1;
         }
@@ -86,7 +87,7 @@ namespace FFSchedulingApp.Model
         }
 
         public string OpponentsToString()
-        {        
+        {
             return string.Join(", ", PossibleOpponents);
         }
 
@@ -94,5 +95,8 @@ namespace FFSchedulingApp.Model
         {
             return Id == 0;
         }
+
+        public override bool Equals(object? obj) => obj is Team other && Id == other.Id;
+        public override int GetHashCode() => Id.GetHashCode();        
     }
 }

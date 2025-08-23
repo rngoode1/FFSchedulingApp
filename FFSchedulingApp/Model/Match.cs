@@ -40,24 +40,12 @@ namespace FFSchedulingApp.Model
             AwayTeam = team2;
             MatchWeek = matchWeek;
             MatchType = team1.Division == team2.Division ? MatchTypes.Divisional : MatchTypes.CrossDivisional;
-            Console.WriteLine($"*Week {MatchWeek} Match Made: {this}*");
-            UpdateTeamProperties();
+            // Console.WriteLine($"*Week {MatchWeek} Match Made: {this}*");
         }
 
-        private void UpdateTeamProperties()
-        {            
-            HomeTeam.UpdateMatchTypes(this);        
-            AwayTeam.UpdateMatchTypes(this);
-
-            
-            if (MatchWeek > 1)
-            {
-                // remove opps from main opp list on each team
-                Console.WriteLine($"Original possible opponents: {HomeTeam}: " + HomeTeam.PossibleOpponents.Count + $", {AwayTeam}: " + AwayTeam.PossibleOpponents.Count);
-                HomeTeam.PossibleOpponents.Remove(AwayTeam);
-                AwayTeam.PossibleOpponents.Remove(HomeTeam);
-                Console.WriteLine($"New possible opponents: {HomeTeam}: " + HomeTeam.PossibleOpponents.Count + $", {AwayTeam}: " + AwayTeam.PossibleOpponents.Count + "\n");
-            }                
+        public bool IsNull()
+        {
+            return HomeTeam.Id == 0 || AwayTeam.Id == 0 || MatchWeek == 0 || MatchType.Equals(MatchTypes.None);
         }
 
         public override string ToString()
